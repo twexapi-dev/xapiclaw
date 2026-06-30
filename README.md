@@ -56,7 +56,7 @@ calls return setup guidance instead of failing plugin installation.
 
 ## Configure
 
-### Option A: TwexAPI API key
+### TwexAPI API key
 
 Create a TwexAPI API key from your TwexAPI account. Store it in an environment
 variable and configure XApiClaw to use it:
@@ -74,12 +74,6 @@ Authorization: Bearer YOUR_API_KEY
 **Security:** Keep the key out of chats, docs, and shell history. Prefer the
 environment-variable command above so OpenClaw writes the secret to local
 config without exposing it in the prompt.
-
-### No MPP
-
-XApiClaw does not implement MPP, Tempo signing keys, `mppx`, `viem`, anonymous
-pay-per-use signing, or accountless payment proofs. Live calls require a
-TwexAPI API key.
 
 ### Enable the optional action tool
 

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `xapiclaw`, an OpenClaw plugin that exposes a TweetClaw-like safe X/Twitter workflow surface powered by TwexAPI Bearer-authenticated endpoints, without MPP.
+**Goal:** Build `xapiclaw`, an OpenClaw plugin that exposes a TweetClaw-like safe X/Twitter workflow surface powered by TwexAPI Bearer-authenticated endpoints and single-path API key auth.
 
 **Architecture:** Use a TypeScript ESM plugin with a static curated endpoint catalog. `explore` searches the catalog offline; `xapiclaw` validates method/path against the catalog before making exactly one HTTPS request to TwexAPI. The OpenClaw entry parses sensitive config, registers tools and `/xstatus`, and adds a `before_tool_call` approval hook for write, private-read, and paid-bulk endpoints.
 
@@ -159,7 +159,7 @@ describe('plugin scaffold exports', () => {
     expect(DEFAULT_BASE_URL).toBe('https://api.twexapi.io');
   });
 
-  test('normalizes plugin config without MPP fields', () => {
+  test('normalizes plugin config without payment signing fields', () => {
     expect(
       asPluginConfig({
         apiKey: 'twex_test_key',
@@ -1573,7 +1573,7 @@ import { describe, expect, test } from 'vitest';
 import manifest from '../openclaw.plugin.json' with { type: 'json' };
 
 describe('OpenClaw manifest', () => {
-  test('declares xapiclaw identity and no MPP config', () => {
+  test('declares xapiclaw identity and no payment signing config', () => {
     expect(manifest.id).toBe('xapiclaw');
     expect(manifest.configSchema.properties).toHaveProperty('apiKey');
     expect(manifest.configSchema.properties).not.toHaveProperty('tempoSigningKey');
@@ -1855,12 +1855,11 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 
 describe('README', () => {
-  test('documents TwexAPI setup and no MPP support', () => {
+  test('documents TwexAPI API key setup', () => {
     const readme = readFileSync('README.md', 'utf8');
 
     expect(readme).toContain('TwexAPI');
     expect(readme).toContain('Authorization: Bearer');
-    expect(readme).toContain('No MPP');
     expect(readme).toContain('openclaw plugins install');
   });
 });
@@ -1903,9 +1902,9 @@ Authorization: Bearer YOUR_API_KEY
 
 Do not paste API keys into chat, docs, shell history, or tool arguments.
 
-## No MPP
+### TwexAPI API key
 
-XApiClaw does not implement MPP, Tempo signing keys, `mppx`, `viem`, or anonymous pay-per-use signing. Live calls require a TwexAPI API key.
+Live calls require a TwexAPI API key. XApiClaw injects it server-side as `Authorization: Bearer`.
 
 ## Endpoint Scope
 
@@ -1939,7 +1938,7 @@ git commit -m "docs: document xapiclaw setup and safety"
 
 ## Plan Self-Review Checklist
 
-- Spec coverage: The plan covers scaffold, OpenClaw plugin identity, TwexAPI Bearer auth, no MPP, static safety subset catalog, blocked endpoints, offline exploration, live execution, approval hook, `/xstatus`, manifest, skill docs, README, tests, typecheck, and build.
+- Spec coverage: The plan covers scaffold, OpenClaw plugin identity, TwexAPI Bearer auth, single API-key auth, static safety subset catalog, blocked endpoints, offline exploration, live execution, approval hook, `/xstatus`, manifest, skill docs, README, tests, typecheck, and build.
 - Placeholder scan: No task relies on unspecified endpoint discovery or future catalog filling. The catalog scope is explicitly listed.
 - Type consistency: Shared names are `XApiClawParams`, `EndpointDescriptor`, `handleXApiClaw`, `handleExplore`, `requestNeedsApproval`, `requiresXApiClawApproval`, `DEFAULT_BASE_URL`, and `asPluginConfig`.
 - Risk consistency: `write`, `private-read`, and `paid-bulk` require approval; `read` does not.

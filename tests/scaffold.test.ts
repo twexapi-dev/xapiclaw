@@ -6,7 +6,7 @@ describe('plugin scaffold exports', () => {
     expect(DEFAULT_BASE_URL).toBe('https://api.twexapi.io');
   });
 
-  test('normalizes plugin config without MPP fields', () => {
+  test('normalizes plugin config without payment signing fields', () => {
     expect(
       asPluginConfig({
         apiKey: 'twex_test_key',

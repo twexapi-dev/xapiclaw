@@ -5,7 +5,7 @@ Status: Approved for planning
 
 ## Summary
 
-Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing shape, but backed by TwexAPI instead of Xquik. The plugin exposes a small, safe OpenClaw surface: one offline discovery tool and one optional live invocation tool. It uses TwexAPI Bearer token authentication only and does not implement MPP.
+Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing shape, but backed by TwexAPI instead of Xquik. The plugin exposes a small, safe OpenClaw surface: one offline discovery tool and one optional live invocation tool. It uses TwexAPI Bearer token authentication as the only live-call credential path.
 
 ## References
 
@@ -26,7 +26,7 @@ Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing sh
 
 ## Non-Goals
 
-- Do not implement MPP, Tempo signing keys, `mppx`, `viem`, or any pay-per-use signing flow.
+- Do not add secondary payment-signing credential flows. Live calls use the TwexAPI API key configuration path.
 - Do not build a general TwexAPI SDK.
 - Do not expose arbitrary URL fetching, arbitrary OpenAPI execution, shell access, filesystem access, or third-party network access.
 - Do not allow agents to handle raw X cookies, Twitter credentials, or TwexAPI API keys directly.
@@ -47,7 +47,7 @@ The OpenClaw config schema contains:
 - `pollingEnabled`: boolean, default `false` for the first release unless a concrete TwexAPI monitor/event endpoint is added.
 - `pollingInterval`: number, default `60`, minimum `5`, reserved for future recurring checks.
 
-There is no `tempoSigningKey` or MPP mode. If no API key is configured, install and `explore` still work, but live calls return setup guidance.
+The config schema exposes only the TwexAPI API key, HTTPS base URL, and reserved polling settings. If no API key is configured, install and `explore` still work, but live calls return setup guidance.
 
 ## Tool Surface
 
