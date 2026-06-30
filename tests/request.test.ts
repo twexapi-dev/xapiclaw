@@ -1,49 +1,45 @@
-import { describe, expect, test, vi } from 'vitest';
-import { createTwexApiRequest, validateBaseUrl } from '../src/request.js';
+import { describe, expect, test } from 'vitest';
+import { buildAuthHeader, buildFetchUrl, createTwexApiRequest, isProhibitedRequest } from '../src/request.js';
 
-describe('TwexAPI request client', () => {
-  test('validates HTTPS base URLs without embedded credentials', () => {
-    expect(validateBaseUrl('https://api.twexapi.io').href).toBe('https://api.twexapi.io/');
-    expect(() => validateBaseUrl('http://api.twexapi.io')).toThrow('HTTPS');
-    expect(() => validateBaseUrl('https://user:pass@api.twexapi.io')).toThrow('credentials');
+describe('TwexAPI request layer', () => {
+  test('builds Bearer auth header', () => {
+    expect(buildAuthHeader('twex_secret')).toEqual({ authorization: 'Bearer twex_secret' });
   });
 
-  test('injects bearer auth and serializes query parameters', async () => {
-    const fetchFunction = vi.fn(async () => new Response(JSON.stringify({ ok: true }), {
-      headers: { 'content-type': 'application/json' },
-      status: 200,
-    })) as unknown as typeof fetch;
+  test('validates HTTPS base URL and credentials', async () => {
+    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', async () => new Response('{}'));
+    await expect(request('/twitter/global-trending/topics')).resolves.toEqual({});
+    expect(() => createTwexApiRequest('http://api.twexapi.io', 'twex_secret')).toThrow('HTTPS');
+    expect(() => createTwexApiRequest('https://user:pass@api.twexapi.io', 'twex_secret')).toThrow('credentials');
+  });
 
-    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', fetchFunction);
-    const response = await request({
-      body: { q: 'ai' },
-      method: 'POST',
-      path: '/twitter/advanced_search',
-      query: { count: 10 },
-    });
-
-    expect(response).toEqual({ ok: true });
-    expect(fetchFunction).toHaveBeenCalledWith(
-      'https://api.twexapi.io/twitter/advanced_search?count=10',
-      expect.objectContaining({
-        body: '{"q":"ai"}',
-        headers: expect.objectContaining({
-          Authorization: 'Bearer twex_secret',
-          'Content-Type': 'application/json',
-        }),
-        method: 'POST',
-      }),
+  test('builds URL with query parameters', () => {
+    expect(buildFetchUrl('https://api.twexapi.io', '/twitter/global-trending/topics', { limit: '5' })).toBe(
+      'https://api.twexapi.io/twitter/global-trending/topics?limit=5',
     );
   });
 
-  test('sanitizes non-2xx errors', async () => {
-    const fetchFunction = vi.fn(async () => new Response('Authorization: Bearer twex_secret denied', {
-      status: 401,
-      statusText: 'Unauthorized',
-    })) as unknown as typeof fetch;
+  test('rejects blocked request paths', async () => {
+    expect(isProhibitedRequest('GET', '/twitter/{auth_token}/cookie')).toBe(true);
+    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', async () => new Response('{}'));
+    await expect(request('/twitter/action', { method: 'POST' })).rejects.toThrow('Agent-prohibited endpoint');
+  });
 
-    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', fetchFunction);
+  test('formats API errors without echoing response body secrets', async () => {
+    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', async () =>
+      new Response(JSON.stringify({ error: 'invalid_request', token: 'secret' }), { status: 400, statusText: 'Bad Request' }),
+    );
+    await expect(request('/twitter/global-trending/topics')).rejects.toThrow(
+      'API request failed: 400 Bad Request (invalid_request)',
+    );
+  });
 
-    await expect(request({ method: 'GET', path: '/balance' })).rejects.toThrow('Bearer [REDACTED]');
+  test('sends JSON body for non-GET methods', async () => {
+    const request = createTwexApiRequest('https://api.twexapi.io', 'twex_secret', async (_input, init) => {
+      expect(init?.headers).toEqual({ authorization: 'Bearer twex_secret', 'content-type': 'application/json' });
+      expect(init?.body).toBe(JSON.stringify({ text: 'hello' }));
+      return new Response(JSON.stringify({ ok: true }));
+    });
+    await expect(request('/twitter/tweets/create', { body: { text: 'hello' }, method: 'POST' })).resolves.toEqual({ ok: true });
   });
 });
