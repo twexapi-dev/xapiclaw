@@ -4,29 +4,16 @@
   "description": "Search tweets, replies, users, followers, trends, lists, communities, DMs, and approved X/Twitter write actions through TwexAPI.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twexapi-dev/xapiclaw.git"
+  },
+  "homepage": "https://github.com/twexapi-dev/xapiclaw#readme",
+  "bugs": {
+    "url": "https://github.com/twexapi-dev/xapiclaw/issues"
+  },
   "engines": {
     "node": ">=22"
-  },
-  "files": [
-    "dist/",
-    "src/",
-    "skills/xapiclaw/SKILL.md",
-    "openclaw.plugin.json",
-    "server.json"
-  ],
-  "keywords": [
-    "openclaw-plugin",
-    "twitter",
-    "x",
-    "twexapi",
-    "automation",
-    "xapiclaw"
-  ],
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
   },
   "openclaw": {
     "extensions": [
@@ -39,19 +26,94 @@
       "pluginApi": ">=2026.6.8",
       "minGatewayVersion": "2026.6.8"
     },
+    "build": {
+      "openclawVersion": "2026.6.8",
+      "pluginSdkVersion": "2026.6.8"
+    },
     "install": {
       "defaultChoice": "npm",
       "npmSpec": "xapiclaw@0.1.0",
       "minHostVersion": ">=2026.6.8"
     }
   },
+  "files": [
+    "dist/",
+    "src/",
+    "skills/xapiclaw/SKILL.md",
+    "openclaw.plugin.json",
+    "server.json"
+  ],
+  "keywords": [
+    "openclaw-plugin",
+    "twitter",
+    "x",
+    "automation",
+    "xapiclaw",
+    "twexapi",
+    "twitter-api",
+    "x-api",
+    "social-media",
+    "scraper",
+    "ai-agent",
+    "tweet",
+    "twitter-scraper",
+    "x-twitter",
+    "tweet-api",
+    "twitter-automation",
+    "openclaw"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.eslint.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "knip": "knip --strict --include-libs --treat-config-hints-as-errors",
+    "cpd": "jscpd .",
+    "check-suppressions": "tsx check-suppressions.ts",
+    "check-em-dash": "tsx check-em-dash.ts",
+    "check-skill-frontmatter": "node scripts/check-skill-frontmatter.mjs",
+    "check-versions": "node scripts/check-versions.mjs",
+    "check-openclaw-platform-fitness": "node scripts/check-openclaw-platform-fitness.mjs",
+    "check-package-artifact": "node scripts/check-package-artifact.mjs",
+    "publish-clean": "node scripts/publish-clean.mjs",
+    "prepack": "npm run build && npm run check-skill-frontmatter && npm run check-versions && npm run check-openclaw-platform-fitness && node scripts/pack-package-json.mjs prepare",
+    "postpack": "node scripts/pack-package-json.mjs restore-after-pack",
+    "prepublishOnly": "npm run check-skill-frontmatter && npm run check-versions && npm run build && npm run check-openclaw-platform-fitness && npm run check-package-artifact",
+    "check:all": "npm run typecheck && npm run lint && npm run cpd && npm run knip && npm run check-suppressions && npm run check-em-dash && npm run check-skill-frontmatter && npm run check-versions && npm run build && npm run check-openclaw-platform-fitness && npm run check-package-artifact && npm run test:coverage"
+  },
   "peerDependencies": {
     "openclaw": ">=2026.6.8"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@sinclair/typebox": "^0.34.48",
     "@types/node": "^25.5.0",
-    "openclaw": ">=2026.6.8",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/eslint-plugin": "^1.6.11",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-no-secrets": "^2.3.3",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-regexp": "^3.1.0",
+    "eslint-plugin-security": "^4.0.0",
+    "eslint-plugin-sonarjs": "^4.0.2",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "globals": "^17.4.0",
+    "jscpd": "^4.0.8",
+    "knip": "^5.86.0",
+    "tsx": "^4.22.4",
     "typescript": "^5.8.0",
     "vitest": "^4.1.8"
+  },
+  "overrides": {
+    "ip-address": "10.2.0",
+    "vite": ">=7.3.2",
+    "postcss": ">=8.5.10"
   }
 }
