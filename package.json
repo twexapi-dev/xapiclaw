@@ -63,7 +63,7 @@
     "openclaw"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.eslint.json",
     "lint": "eslint .",
     "test": "vitest run",
