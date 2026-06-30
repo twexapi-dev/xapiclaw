@@ -1,23 +1,21 @@
+import { truncateResponse } from '../truncate.js';
 import type { ToolResult } from '../types.js';
 
-const BEARER_PATTERN = /Bearer\s+[-._~+/=A-Za-z0-9]+/gu;
-
-export function redactSecrets(value: string): string {
-  return value.replace(BEARER_PATTERN, 'Bearer [REDACTED]');
-}
-
-export function textResult(text: string): ToolResult {
+function textResult(text: string): ToolResult {
   return { content: [{ text, type: 'text' }] };
 }
 
-export function jsonResult(value: unknown): ToolResult {
-  return textResult(JSON.stringify(value, null, 2));
+function successResult(content: unknown): ToolResult {
+  return textResult(truncateResponse(content));
 }
 
-export function errorResult(error: unknown): ToolResult {
-  const message = error instanceof Error ? error.message : String(error);
-  return {
-    content: [{ text: redactSecrets(message), type: 'text' }],
-    isError: true,
-  };
+function redactSecrets(value: string): string {
+  return value.replace(/Bearer\s+[A-Za-z0-9._~+/=-]+/gu, 'Bearer [REDACTED]');
 }
+
+function errorResult(error: unknown): ToolResult {
+  const message = error instanceof Error ? error.message : String(error);
+  return { ...textResult(redactSecrets(message)), isError: true };
+}
+
+export { errorResult, redactSecrets, successResult, textResult };

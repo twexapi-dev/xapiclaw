@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { errorResult, jsonResult, textResult } from '../src/tools/result.js';
+import { errorResult, successResult, textResult } from '../src/tools/result.js';
 
 describe('tool result helpers', () => {
   test('formats text results', () => {
@@ -8,8 +8,8 @@ describe('tool result helpers', () => {
     });
   });
 
-  test('formats JSON results deterministically', () => {
-    expect(jsonResult({ ok: true })).toEqual({
+  test('formats JSON-like results deterministically', () => {
+    expect(successResult({ ok: true })).toEqual({
       content: [{ text: '{\n  "ok": true\n}', type: 'text' }],
     });
   });
