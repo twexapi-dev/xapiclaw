@@ -10,7 +10,7 @@ const FORBIDDEN_README_TERMS = [
 ];
 
 describe('README', () => {
-  test('documents XApiClaw with TweetClaw-style usage sections', () => {
+  test('documents XApiClaw with OpenClaw-style usage sections', () => {
     const readme = readFileSync('README.md', 'utf8');
     expect(readme).toContain('# XApiClaw');
     expect(readme).toContain('TwexAPI');

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `xapiclaw`, an OpenClaw plugin that exposes a TweetClaw-like safe X/Twitter workflow surface powered by TwexAPI Bearer-authenticated endpoints and single-path API key auth.
+**Goal:** Build `xapiclaw`, an OpenClaw plugin that exposes a OpenClaw-style safe X/Twitter workflow surface powered by TwexAPI Bearer-authenticated endpoints and single-path API key auth.
 
 **Architecture:** Use a TypeScript ESM plugin with a static curated endpoint catalog. `explore` searches the catalog offline; `xapiclaw` validates method/path against the catalog before making exactly one HTTPS request to TwexAPI. The OpenClaw entry parses sensitive config, registers tools and `/xstatus`, and adds a `before_tool_call` approval hook for write, private-read, and paid-bulk endpoints.
 
@@ -497,7 +497,7 @@ import {
 } from '../src/tools/catalog.js';
 
 describe('TwexAPI catalog', () => {
-  test('contains the selected TweetClaw-like safety subset', () => {
+  test('contains the selected OpenClaw-style safety subset', () => {
     expect(findEndpoint('POST', '/twitter/advanced_search')?.category).toBe('Search');
     expect(findEndpoint('GET', '/twitter/tweets/123/similar')?.path).toBe('/twitter/tweets/{tweet_id}/similar');
     expect(findEndpoint('POST', '/twitter/tweets/create')?.risk).toBe('write');
@@ -1880,7 +1880,7 @@ Replace `README.md` with:
 
 XApiClaw is an OpenClaw plugin for safe X/Twitter workflows powered by [TwexAPI](https://docs.twexapi.io).
 
-It follows the TweetClaw-style agent shape:
+It follows the OpenClaw-style agent shape:
 
 - `explore`: offline search over the curated TwexAPI endpoint catalog
 - `xapiclaw`: optional live execution for one catalog-approved endpoint

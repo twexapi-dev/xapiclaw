@@ -5,7 +5,7 @@ Status: Approved for planning
 
 ## Summary
 
-Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing shape, but backed by TwexAPI instead of Xquik. The plugin exposes a small, safe OpenClaw surface: one offline discovery tool and one optional live invocation tool. It uses TwexAPI Bearer token authentication as the only live-call credential path.
+Build `xapiclaw` as an OpenClaw plugin modeled after upstream source's agent-facing shape, but backed by TwexAPI instead of source provider. The plugin exposes a small, safe OpenClaw surface: one offline discovery tool and one optional live invocation tool. It uses TwexAPI Bearer token authentication as the only live-call credential path.
 
 ## References
 
@@ -17,7 +17,7 @@ Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing sh
 ## Goals
 
 - Create an OpenClaw plugin project in the current repository.
-- Mirror TweetClaw's useful plugin shape: package metadata, OpenClaw manifest, runtime entry, skill documentation, static endpoint catalog, `explore` tool, execution tool, approval hook, slash commands where useful, and tests.
+- Mirror upstream source's useful plugin shape: package metadata, OpenClaw manifest, runtime entry, skill documentation, static endpoint catalog, `explore` tool, execution tool, approval hook, slash commands where useful, and tests.
 - Use TwexAPI for X/Twitter capabilities through `https://api.twexapi.io`.
 - Store credentials in OpenClaw plugin config and inject `Authorization: Bearer <apiKey>` only inside the plugin runtime.
 - Provide a curated safety subset of TwexAPI endpoints instead of exposing every endpoint.
@@ -89,7 +89,7 @@ The runtime attaches `Authorization: Bearer <apiKey>` and `Content-Type: applica
 
 ## Endpoint Scope
 
-First release uses the "TweetClaw-like safety subset" selected from TwexAPI OpenAPI.
+First release uses the "OpenClaw-style safety subset" selected from TwexAPI OpenAPI.
 
 Included read categories:
 

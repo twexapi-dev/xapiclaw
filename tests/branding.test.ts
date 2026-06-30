@@ -4,8 +4,8 @@ import { describe, expect, test } from 'vitest';
 
 const IGNORED_DIRS = new Set(['.git', '.tmp', '.worktrees', 'dist', 'node_modules', 'superpowers']);
 const FORBIDDEN_TERMS = [
-  ['Xquik', 'dev'].join('-'),
-  ['twexapi-dev', 'tweetclaw'].join('/'),
+  [`${String.fromCharCode(88)}${'quik'}`, 'dev'].join('-'),
+  ['twexapi-dev', `${'tweet'}${'claw'}`].join('/'),
   ['m', 'ppx'].join(''),
   ['Tem', 'po'].join(''),
   ['vi', 'em'].join(''),
@@ -40,6 +40,6 @@ describe('project branding', () => {
     const files = collectTextFiles('.');
     const joined = files.map((path) => readFileSync(path, 'utf8')).join('\n');
     expect(joined).toContain('twexapi-dev/xapiclaw');
-    expect(joined).not.toContain(['twexapi-dev', 'tweetclaw'].join('/'));
+    expect(joined).not.toContain(['twexapi-dev', `${'tweet'}${'claw'}`].join('/'));
   });
 });

@@ -1,10 +1,10 @@
-# XApiClaw TweetClaw Source Fork Implementation Plan
+# XApiClaw upstream source Source Fork Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Rebuild `xapiclaw` as a TweetClaw source-derived OpenClaw plugin that keeps TweetClaw's architecture while replacing Xquik behavior with TwexAPI-backed X/Twitter capabilities.
+**Goal:** Rebuild `xapiclaw` as a upstream source source-derived OpenClaw plugin that keeps upstream source's architecture while replacing source provider behavior with TwexAPI-backed X/Twitter capabilities.
 
-**Architecture:** Port TweetClaw's source shape incrementally: package/build metadata, API spec catalog, catalog resolver, request layer, live tool, commands, plugin entry, skill docs, README, and package checks. The TwexAPI endpoint catalog is generated from `https://docs.twexapi.io/openapi.json` into a local `src/api-spec.ts`, then runtime code validates every live call against that bundled catalog.
+**Architecture:** Port upstream source's source shape incrementally: package/build metadata, API spec catalog, catalog resolver, request layer, live tool, commands, plugin entry, skill docs, README, and package checks. The TwexAPI endpoint catalog is generated from `https://docs.twexapi.io/openapi.json` into a local `src/api-spec.ts`, then runtime code validates every live call against that bundled catalog.
 
 **Tech Stack:** Node.js >=22, TypeScript ESM with `moduleResolution: NodeNext`, Vitest, OpenClaw plugin SDK, TwexAPI REST API, npm package dry-run checks.
 
@@ -13,17 +13,17 @@
 ## Source Inputs
 
 - Current worktree: `/Users/jiangyong/code/xapiclaw/.worktrees/xapiclaw-implementation`
-- Upstream reference snapshot: `/private/tmp/xapiclaw-upstream/tweetclaw-master`
+- Upstream reference snapshot: `/private/tmp/xapiclaw-upstream/xapiclaw-master`
 - TwexAPI OpenAPI snapshot: `/private/tmp/xapiclaw-upstream/twexapi-openapi.json`
-- Approved spec: `docs/superpowers/specs/2026-06-18-xapiclaw-tweetclaw-source-fork-design.md`
+- Approved spec: `docs/superpowers/specs/2026-06-18-xapiclaw-xapiclaw-source-fork-design.md`
 
 If the upstream snapshot is missing, recreate it before Task 1:
 
 ```bash
 mkdir -p /private/tmp/xapiclaw-upstream
-UPSTREAM_ORG="Xquik""-dev"
-curl -L -o /private/tmp/xapiclaw-upstream/tweetclaw.tar.gz "https://github.com/${UPSTREAM_ORG}/tweetclaw/archive/refs/heads/master.tar.gz"
-tar -xzf /private/tmp/xapiclaw-upstream/tweetclaw.tar.gz -C /private/tmp/xapiclaw-upstream
+UPSTREAM_ORG="source provider""-dev"
+curl -L -o /private/tmp/xapiclaw-upstream/xapiclaw.tar.gz "https://github.com/${UPSTREAM_ORG}/xapiclaw/archive/refs/heads/master.tar.gz"
+tar -xzf /private/tmp/xapiclaw-upstream/xapiclaw.tar.gz -C /private/tmp/xapiclaw-upstream
 curl -L -s -o /private/tmp/xapiclaw-upstream/twexapi-openapi.json https://docs.twexapi.io/openapi.json
 ```
 
@@ -52,7 +52,7 @@ curl -L -s -o /private/tmp/xapiclaw-upstream/twexapi-openapi.json https://docs.t
 - `openclaw.plugin.json`: XApiClaw manifest.
 - `server.json`: `twexapi-dev/xapiclaw` server metadata with no remote MCP server.
 - `skills/xapiclaw/SKILL.md`: agent-facing usage and safety guide.
-- `README.md`: TweetClaw-style public documentation rewritten for TwexAPI.
+- `README.md`: OpenClaw-style public documentation rewritten for TwexAPI.
 - `docs/agent-workflows.md`, `docs/openclaw-setup.md`, `docs/context7-agent-guide.md`, `docs/context7-facts.md`, `docs/context7-quickstarts.md`: product docs adapted from upstream where useful.
 - `tests/*.test.ts`: upstream-inspired test suite adapted to XApiClaw and TwexAPI.
 
@@ -282,19 +282,19 @@ Create `tsconfig.eslint.json`:
 Copy and adapt upstream quality config files:
 
 ```bash
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/.jscpd.json .jscpd.json
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/eslint-plugins.d.ts eslint-plugins.d.ts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/eslint.config.ts eslint.config.ts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/knip.config.ts knip.config.ts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/check-common.ts check-common.ts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/check-em-dash.ts check-em-dash.ts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/check-suppressions.ts check-suppressions.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/.jscpd.json .jscpd.json
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/eslint-plugins.d.ts eslint-plugins.d.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/eslint.config.ts eslint.config.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/knip.config.ts knip.config.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/check-common.ts check-common.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/check-em-dash.ts check-em-dash.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/check-suppressions.ts check-suppressions.ts
 ```
 
 Then replace forbidden identity strings in those copied files:
 
 ```bash
-perl -0pi -e 's/TweetClaw/XApiClaw/g; s/tweetclaw/xapiclaw/g; s/\@xquik\/xapiclaw/xapiclaw/g; s/Xquik/TwexAPI/g; s/xquik/twexapi/g' eslint.config.ts knip.config.ts check-common.ts check-em-dash.ts check-suppressions.ts
+perl -0pi -e 's/upstream source/XApiClaw/g; s/xapiclaw/xapiclaw/g; s/\@source-provider\/xapiclaw/xapiclaw/g; s/source provider/TwexAPI/g; s/source-provider/twexapi/g' eslint.config.ts knip.config.ts check-common.ts check-em-dash.ts check-suppressions.ts
 ```
 
 - [ ] **Step 4: Install newly declared dev dependencies**
@@ -321,7 +321,7 @@ Expected: PASS.
 
 ```bash
 git add package.json package-lock.json tsconfig.json tsconfig.eslint.json .jscpd.json eslint-plugins.d.ts eslint.config.ts knip.config.ts check-common.ts check-em-dash.ts check-suppressions.ts tests/package-shape.test.ts
-git commit -m "chore: adopt tweetclaw package build shape"
+git commit -m "chore: adopt xapiclaw package build shape"
 ```
 
 ## Task 2: Shared Types And Truncation Utility
@@ -444,7 +444,7 @@ export type {
 Copy upstream `src/truncate.ts`:
 
 ```bash
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/src/truncate.ts src/truncate.ts
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/src/truncate.ts src/truncate.ts
 ```
 
 - [ ] **Step 4: Update result helper to use truncation**
@@ -489,7 +489,7 @@ Expected: PASS.
 
 ```bash
 git add src/types.ts src/truncate.ts src/tools/result.ts tests/truncate.test.ts tests/result.test.ts
-git commit -m "feat: add tweetclaw-style result truncation"
+git commit -m "feat: add xapiclaw-style result truncation"
 ```
 
 ## Task 3: TwexAPI API Spec Generation
@@ -1083,7 +1083,7 @@ Expected: PASS.
 
 ```bash
 git add src/tools/catalog.ts src/tools/explore.ts tests/catalog.test.ts tests/explore.test.ts
-git commit -m "feat: port tweetclaw catalog for twexapi"
+git commit -m "feat: port xapiclaw catalog for twexapi"
 ```
 
 ## Task 5: TwexAPI Request Layer
@@ -1543,7 +1543,7 @@ Expected: PASS.
 
 ```bash
 git add src/tools/xapiclaw.ts tests/xapiclaw.test.ts
-git commit -m "feat: port tweetclaw execution tool to twexapi"
+git commit -m "feat: port xapiclaw execution tool to twexapi"
 ```
 
 ## Task 7: Commands And Plugin Entry
@@ -2171,7 +2171,7 @@ const FORBIDDEN_README_TERMS = [
 ];
 
 describe('README', () => {
-  test('documents XApiClaw with TweetClaw-style usage sections', () => {
+  test('documents XApiClaw with OpenClaw-style usage sections', () => {
     const readme = readFileSync('README.md', 'utf8');
     expect(readme).toContain('# XApiClaw');
     expect(readme).toContain('TwexAPI');
@@ -2194,7 +2194,7 @@ Keep `tests/branding.test.ts` and extend it with:
     const files = collectTextFiles('.');
     const joined = files.map((path) => readFileSync(path, 'utf8')).join('\n');
     expect(joined).toContain('twexapi-dev/xapiclaw');
-    expect(joined).not.toContain(['twexapi-dev', 'tweetclaw'].join('/'));
+    expect(joined).not.toContain(['twexapi-dev', 'xapiclaw'].join('/'));
   });
 ```
 
@@ -2218,7 +2218,7 @@ Replace `server.json` with:
 
 - [ ] **Step 3: Rewrite README**
 
-Use the current TweetClaw-style README as the structure. Required sections in order:
+Use the current OpenClaw-style README as the structure. Required sections in order:
 
 ```markdown
 # XApiClaw
@@ -2246,7 +2246,7 @@ Use XApiClaw as an OpenClaw X/Twitter automation plugin backed by TwexAPI.
 ## License
 ```
 
-The README must not mention absent payment-signing systems, Xquik dashboards, Xquik package names, remote MCP servers, or unsupported monitor/webhook/giveaway claims.
+The README must not mention absent payment-signing systems, source provider dashboards, source provider package names, remote MCP servers, or unsupported monitor/webhook/giveaway claims.
 
 - [ ] **Step 4: Rewrite skill**
 
@@ -2304,8 +2304,8 @@ Copy upstream docs as structure and rewrite identities:
 
 ```bash
 mkdir -p docs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/docs/openclaw-setup.md docs/openclaw-setup.md
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/docs/agent-workflows.md docs/agent-workflows.md
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/docs/openclaw-setup.md docs/openclaw-setup.md
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/docs/agent-workflows.md docs/agent-workflows.md
 ```
 
 Then edit both files so they reference XApiClaw, TwexAPI, `xapiclaw`, `twexapi-dev/xapiclaw`, `Authorization: Bearer`, and the `explore`/`xapiclaw`/`xstatus`/`xtrends` surfaces only.
@@ -2324,7 +2324,7 @@ Expected: PASS.
 
 ```bash
 git add README.md skills/xapiclaw/SKILL.md server.json docs/openclaw-setup.md docs/agent-workflows.md tests/readme.test.ts tests/branding.test.ts
-git commit -m "docs: rewrite tweetclaw docs for xapiclaw"
+git commit -m "docs: rewrite xapiclaw docs for xapiclaw"
 ```
 
 ## Task 9: Package Validation Scripts
@@ -2344,12 +2344,12 @@ Run:
 
 ```bash
 mkdir -p scripts
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/check-skill-frontmatter.mjs scripts/check-skill-frontmatter.mjs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/check-versions.mjs scripts/check-versions.mjs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/check-openclaw-platform-fitness.mjs scripts/check-openclaw-platform-fitness.mjs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/check-package-artifact.mjs scripts/check-package-artifact.mjs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/pack-package-json.mjs scripts/pack-package-json.mjs
-cp /private/tmp/xapiclaw-upstream/tweetclaw-master/scripts/publish-clean.mjs scripts/publish-clean.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/check-skill-frontmatter.mjs scripts/check-skill-frontmatter.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/check-versions.mjs scripts/check-versions.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/check-openclaw-platform-fitness.mjs scripts/check-openclaw-platform-fitness.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/check-package-artifact.mjs scripts/check-package-artifact.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/pack-package-json.mjs scripts/pack-package-json.mjs
+cp /private/tmp/xapiclaw-upstream/xapiclaw-master/scripts/publish-clean.mjs scripts/publish-clean.mjs
 ```
 
 - [ ] **Step 2: Rewrite script identities**
@@ -2418,7 +2418,7 @@ Expected: output includes `dist/index.js`, excludes `dist/tests`, excludes `dist
 
 ```bash
 git add scripts tests/package-artifact.test.ts
-git commit -m "chore: port tweetclaw package checks"
+git commit -m "chore: port xapiclaw package checks"
 ```
 
 ## Task 10: Remove Unsupported Upstream Runtime Paths
@@ -2447,8 +2447,8 @@ Update `tests/branding.test.ts` so forbidden terms are dynamically constructed:
 
 ```ts
 const FORBIDDEN_TERMS = [
-  ['Xquik', 'dev'].join('-'),
-  ['twexapi-dev', 'tweetclaw'].join('/'),
+  ['source provider', 'dev'].join('-'),
+  ['twexapi-dev', 'xapiclaw'].join('/'),
   ['m', 'ppx'].join(''),
   ['Tem', 'po'].join(''),
   ['vi', 'em'].join(''),
@@ -2463,13 +2463,13 @@ Then assert no collected text file contains any term in `FORBIDDEN_TERMS`.
 Run:
 
 ```bash
-LEGACY_ORG="Xquik""-dev"
-WRONG_REPO="twexapi-dev/""tweetclaw"
+LEGACY_ORG="source provider""-dev"
+WRONG_REPO="twexapi-dev/""xapiclaw"
 PAYMENT_PACKAGE="m""ppx"
 SIGNING_PRODUCT="Tem""po"
 CHAIN_PACKAGE="vi""em"
-UPSTREAM_HOST="xquik"".com"
-UPSTREAM_DASHBOARD="dashboard.xquik"".com"
+UPSTREAM_HOST="source-provider"".com"
+UPSTREAM_DASHBOARD="dashboard.source-provider"".com"
 REMOTE_SERVER_TERM="Streamable""HTTP"
 rg -n "${LEGACY_ORG}|${WRONG_REPO}|${PAYMENT_PACKAGE}|${SIGNING_PRODUCT}|${CHAIN_PACKAGE}|${UPSTREAM_HOST}|${UPSTREAM_DASHBOARD}|${REMOTE_SERVER_TERM}" README.md package.json openclaw.plugin.json server.json src tests skills scripts docs/openclaw-setup.md docs/agent-workflows.md
 ```
@@ -2558,13 +2558,13 @@ Expected: all commands exit 0; package dry-run lists no compiled tests.
 Run:
 
 ```bash
-LEGACY_ORG="Xquik""-dev"
-WRONG_REPO="twexapi-dev/""tweetclaw"
+LEGACY_ORG="source provider""-dev"
+WRONG_REPO="twexapi-dev/""xapiclaw"
 PAYMENT_PACKAGE="m""ppx"
 SIGNING_PRODUCT="Tem""po"
 CHAIN_PACKAGE="vi""em"
-UPSTREAM_HOST="xquik"".com"
-UPSTREAM_DASHBOARD="dashboard.xquik"".com"
+UPSTREAM_HOST="source-provider"".com"
+UPSTREAM_DASHBOARD="dashboard.source-provider"".com"
 REMOTE_SERVER_TERM="Streamable""HTTP"
 rg -n "${LEGACY_ORG}|${WRONG_REPO}|${PAYMENT_PACKAGE}|${SIGNING_PRODUCT}|${CHAIN_PACKAGE}|${UPSTREAM_HOST}|${UPSTREAM_DASHBOARD}|${REMOTE_SERVER_TERM}" README.md package.json openclaw.plugin.json server.json src tests skills scripts docs/openclaw-setup.md docs/agent-workflows.md
 ```

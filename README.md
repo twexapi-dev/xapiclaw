@@ -12,9 +12,9 @@ direct messages, and run approved X/Twitter write actions from
 [OpenClaw](https://github.com/openclaw/openclaw).
 
 Use XApiClaw as an OpenClaw X/Twitter automation plugin backed by
-[TwexAPI](https://docs.twexapi.io). It mirrors the TweetClaw agent-facing
-shape: one free local catalog tool, one optional live action tool, and a
-slash command for account status. Live requests use your TwexAPI API key and
+[TwexAPI](https://docs.twexapi.io). It follows a compact agent-facing shape:
+one free local catalog tool, one optional live action tool, and slash commands
+for account status and trends. Live requests use your TwexAPI API key and
 inject authentication server-side so the agent never sees the secret.
 
 ## Install
