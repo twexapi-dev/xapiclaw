@@ -1,0 +1,57 @@
+{
+  "name": "xapiclaw",
+  "version": "0.1.0",
+  "description": "OpenClaw plugin for safe X/Twitter workflows powered by TwexAPI.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "skills/xapiclaw/SKILL.md",
+    "openclaw.plugin.json",
+    "server.json"
+  ],
+  "keywords": [
+    "openclaw-plugin",
+    "twitter",
+    "x",
+    "twexapi",
+    "automation",
+    "xapiclaw"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "runtimeExtensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.6.8",
+      "minGatewayVersion": "2026.6.8"
+    },
+    "install": {
+      "defaultChoice": "npm",
+      "npmSpec": "xapiclaw@0.1.0",
+      "minHostVersion": ">=2026.6.8"
+    }
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.6.8"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "openclaw": ">=2026.6.8",
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.8"
+  }
+}
