@@ -6,14 +6,14 @@ describe('plugin scaffold exports', () => {
     expect(DEFAULT_BASE_URL).toBe('https://api.twexapi.io');
   });
 
-  test('normalizes plugin config without payment signing fields', () => {
+  test('normalizes plugin config and ignores unknown fields', () => {
     expect(
       asPluginConfig({
         apiKey: 'twex_test_key',
         baseUrl: 'https://api.twexapi.io',
         pollingEnabled: true,
         pollingInterval: 2,
-        tempoSigningKey: 'ignored',
+        unknownCredential: 'ignored',
       }),
     ).toEqual({
       apiKey: 'twex_test_key',
