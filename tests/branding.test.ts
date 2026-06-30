@@ -37,4 +37,11 @@ describe('project branding', () => {
 
     expect(offenders).toEqual([]);
   });
+
+  test('uses XApiClaw public repository slug', () => {
+    const files = collectTextFiles('.');
+    const joined = files.map((path) => readFileSync(path, 'utf8')).join('\n');
+    expect(joined).toContain('twexapi-dev/xapiclaw');
+    expect(joined).not.toContain(['twexapi-dev', 'tweetclaw'].join('/'));
+  });
 });

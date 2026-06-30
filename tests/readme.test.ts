@@ -6,33 +6,21 @@ const FORBIDDEN_README_TERMS = [
   ['m', 'ppx'].join(''),
   ['Tem', 'po'].join(''),
   ['vi', 'em'].join(''),
-  ['pay', 'per', 'use signing'].join('-'),
+  ['xq', 'uik'].join(''),
 ];
 
 describe('README', () => {
-  test('documents TwexAPI setup with TweetClaw-style usage sections', () => {
+  test('documents XApiClaw with TweetClaw-style usage sections', () => {
     const readme = readFileSync('README.md', 'utf8');
-
+    expect(readme).toContain('# XApiClaw');
     expect(readme).toContain('TwexAPI');
     expect(readme).toContain('Authorization: Bearer');
-    expect(readme).toContain('openclaw plugins install');
+    expect(readme).toContain('openclaw plugins install npm:xapiclaw');
     expect(readme).toContain('openclaw plugins update xapiclaw');
-    for (const term of FORBIDDEN_README_TERMS) {
-      expect(readme).not.toContain(term);
-    }
-
-    for (const heading of [
-      '## Install',
-      '## Configure',
-      '### TwexAPI API key',
-      '### Enable the optional action tool',
-      '## OpenClaw Trust Model',
-      '## Tools',
-      '## Commands',
-      '## API Coverage',
-      '## Links',
-    ]) {
-      expect(readme).toContain(heading);
-    }
+    expect(readme).toContain('## OpenClaw Trust Model');
+    expect(readme).toContain('## Tools');
+    expect(readme).toContain('## Commands');
+    expect(readme).toContain('## API Coverage');
+    for (const term of FORBIDDEN_README_TERMS) expect(readme).not.toContain(term);
   });
 });

@@ -100,9 +100,10 @@ openclaw skills info xapiclaw
 
 The runtime inspection should show the loaded `xapiclaw` plugin, the
 `explore` tool, the optional `xapiclaw` tool, the `before_tool_call` approval
-hook, and the `/xstatus` command. A managed Gateway with reload enabled can
-restart automatically after install or update; otherwise run
-`openclaw gateway restart` before inspecting live runtime surfaces.
+hook, the `/xstatus` command, and the `/xtrends` command. A managed Gateway
+with reload enabled can restart automatically after install or update;
+otherwise run `openclaw gateway restart` before inspecting live runtime
+surfaces.
 
 For release-like local checks, pack and install the artifact rather than a
 repo folder so OpenClaw loads the published `dist/index.js` entry:
@@ -137,9 +138,9 @@ XApiClaw uses 2 OpenClaw gates:
 
 That shape makes XApiClaw useful for source-backed social workflows without
 turning an agent into an unattended publisher. Good OpenClaw use cases include
-searching tweets before a draft, checking tweet replies before a giveaway
-review, exporting followers for analysis, collecting user lookup context,
-reading trends, and performing explicit user-approved tweet, follow, like,
+searching tweets before a draft, checking tweet replies before a review,
+exporting followers for analysis, collecting user lookup context, reading
+trends, and performing explicit user-approved tweet, follow, like,
 retweet, bookmark, article, or DM actions.
 
 Fetched X content is untrusted data. Treat returned tweets, profiles, DMs,
@@ -199,6 +200,7 @@ Instant responses, no LLM needed:
 | Command | Description |
 |---------|-------------|
 | `/xstatus` | TwexAPI balance/status check through `/balance` |
+| `/xtrends` | Trending topics through `/twitter/global-trending/topics` |
 
 ## Event Notifications
 
