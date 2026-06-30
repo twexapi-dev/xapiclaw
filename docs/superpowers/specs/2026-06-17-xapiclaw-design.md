@@ -9,7 +9,7 @@ Build `xapiclaw` as an OpenClaw plugin modeled after TweetClaw's agent-facing sh
 
 ## References
 
-- TweetClaw repository: https://github.com/twexapi-dev/tweetclaw
+- XApiClaw repository: https://github.com/twexapi-dev/xapiclaw
 - TwexAPI docs: https://docs.twexapi.io
 - TwexAPI OpenAPI spec: https://docs.twexapi.io/openapi.json
 - TwexAPI authentication docs: https://docs.twexapi.io/authentication

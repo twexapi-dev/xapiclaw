@@ -4,6 +4,7 @@ import { describe, expect, test } from 'vitest';
 
 const IGNORED_DIRS = new Set(['.git', 'dist', 'node_modules']);
 const FORBIDDEN_GITHUB_ORG = ['Xquik', 'dev'].join('-');
+const FORBIDDEN_TWEXAPI_REPO = ['twexapi-dev', 'tweetclaw'].join('/');
 
 function collectTextFiles(directory: string): string[] {
   const files: string[] = [];
@@ -24,6 +25,14 @@ describe('project branding', () => {
   test('does not reference the legacy GitHub organization', () => {
     const offenders = collectTextFiles('.').filter((path) =>
       readFileSync(path, 'utf8').includes(FORBIDDEN_GITHUB_ORG),
+    );
+
+    expect(offenders).toEqual([]);
+  });
+
+  test('uses the XApiClaw repository under the TwexAPI GitHub organization', () => {
+    const offenders = collectTextFiles('.').filter((path) =>
+      readFileSync(path, 'utf8').includes(FORBIDDEN_TWEXAPI_REPO),
     );
 
     expect(offenders).toEqual([]);
