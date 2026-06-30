@@ -8,7 +8,8 @@
     "onCapabilities": ["tool"]
   },
   "commandAliases": [
-    { "name": "xstatus", "kind": "runtime-slash" }
+    { "name": "xstatus", "kind": "runtime-slash" },
+    { "name": "xtrends", "kind": "runtime-slash" }
   ],
   "skills": ["skills/xapiclaw"],
   "contracts": {
@@ -34,15 +35,15 @@
         "pattern": "^https://",
         "description": "HTTPS TwexAPI-compatible API base URL."
       },
-      "pollingEnabled": {
-        "type": "boolean",
-        "default": false
-      },
       "pollingInterval": {
         "type": "number",
         "default": 60,
         "minimum": 5,
         "description": "Reserved polling interval in seconds."
+      },
+      "pollingEnabled": {
+        "type": "boolean",
+        "default": false
       }
     }
   },
@@ -59,15 +60,15 @@
       "advanced": true,
       "help": "HTTPS only. Change only for a TwexAPI-compatible deployment."
     },
+    "pollingInterval": {
+      "label": "Event Poll Interval (seconds)",
+      "advanced": true,
+      "help": "Reserved for future TwexAPI monitor/event endpoints."
+    },
     "pollingEnabled": {
       "label": "Enable Event Notifications",
       "advanced": true,
-      "help": "Reserved for a future monitor/event endpoint."
-    },
-    "pollingInterval": {
-      "label": "Event Poll Interval",
-      "advanced": true,
-      "help": "Reserved for future polling support."
+      "help": "Reserved for future TwexAPI monitor/event endpoints."
     }
   }
 }

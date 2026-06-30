@@ -5,36 +5,34 @@ import {
 } from 'openclaw/plugin-sdk/plugin-entry';
 import type { JsonSchemaObject } from 'openclaw/plugin-sdk/config-schema';
 import { handleXStatus } from './commands/xstatus.js';
+import { handleXTrends } from './commands/xtrends.js';
 import { createTwexApiRequest } from './request.js';
 import { normalizeMethod, requestNeedsApproval } from './tools/catalog.js';
 import { handleExplore, SEARCH_DESCRIPTION } from './tools/explore.js';
 import { EXECUTE_DESCRIPTION, handleXApiClaw } from './tools/xapiclaw.js';
 import type { ExploreParams, FetchFunction, PluginConfig, ToolResult, XApiClawParams } from './types.js';
 
-export const DEFAULT_BASE_URL = 'https://api.twexapi.io';
+const DEFAULT_BASE_URL = 'https://api.twexapi.io';
+const DEFAULT_POLLING_INTERVAL_SECONDS = 60;
 const MIN_POLLING_INTERVAL_SECONDS = 5;
 
 const CONFIG_JSON_SCHEMA = {
   additionalProperties: false,
   properties: {
-    apiKey: {
-      description: 'TwexAPI API key. Store this as sensitive OpenClaw plugin config.',
-      minLength: 1,
-      type: 'string',
-    },
+    apiKey: { description: 'TwexAPI API key. Store as sensitive OpenClaw plugin config.', minLength: 1, type: 'string' },
     baseUrl: {
       default: DEFAULT_BASE_URL,
       description: 'HTTPS TwexAPI-compatible API base URL.',
       pattern: '^https://',
       type: 'string',
     },
-    pollingEnabled: { default: false, type: 'boolean' },
     pollingInterval: {
-      default: 60,
-      description: 'Reserved poll interval in seconds.',
-      minimum: 5,
+      default: DEFAULT_POLLING_INTERVAL_SECONDS,
+      description: 'Reserved polling interval in seconds.',
+      minimum: MIN_POLLING_INTERVAL_SECONDS,
       type: 'number',
     },
+    pollingEnabled: { default: false, type: 'boolean' },
   },
   type: 'object',
 } as const;
@@ -72,6 +70,7 @@ type BeforeToolCallHandler = (
 
 interface OpenClawApi {
   readonly logger: {
+    readonly debug?: (message: string) => void;
     readonly error: (message: string) => void;
     readonly info: (message: string) => void;
     readonly warn: (message: string) => void;
@@ -92,7 +91,7 @@ interface OpenClawApi {
     tool: {
       readonly description: string;
       readonly execute: (toolCallId: string, params: unknown) => Promise<ToolResult>;
-      readonly label: string;
+      readonly label?: string;
       readonly name: string;
       readonly parameters: unknown;
     },
@@ -118,6 +117,7 @@ const EXPLORE_PARAMETERS = {
     method: { description: 'HTTP method filter', enum: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], type: 'string' },
     path: { description: 'Exact or partial API path filter', type: 'string' },
     query: { description: 'Keyword search across endpoint metadata', type: 'string' },
+    risk: { description: 'Risk filter', enum: ['read', 'private-read', 'paid-bulk', 'write'], type: 'string' },
   },
   type: 'object',
 };
@@ -152,13 +152,12 @@ function normalizePollingInterval(value: unknown): number | undefined {
   return Math.max(Math.trunc(value), MIN_POLLING_INTERVAL_SECONDS);
 }
 
-export function asPluginConfig(value: unknown): PluginConfig {
+function asPluginConfig(value: unknown): PluginConfig {
   const config = asObject(value);
   if (config === undefined) return {};
 
   const { apiKey, baseUrl, pollingEnabled, pollingInterval } = config;
   const normalizedPollingInterval = normalizePollingInterval(pollingInterval);
-
   return {
     ...(typeof apiKey === 'string' && apiKey.length > 0 ? { apiKey } : {}),
     ...(typeof baseUrl === 'string' && baseUrl.length > 0 ? { baseUrl } : {}),
@@ -170,8 +169,7 @@ export function asPluginConfig(value: unknown): PluginConfig {
 function asExploreParams(params: unknown): Readonly<ExploreParams> {
   const value = asObject(params);
   if (value === undefined) return {};
-  const { category, free, limit, method, path, query } = value;
-
+  const { category, free, limit, method, path, query, risk } = value;
   return {
     ...(typeof category === 'string' ? { category } : {}),
     ...(typeof free === 'boolean' ? { free } : {}),
@@ -179,6 +177,7 @@ function asExploreParams(params: unknown): Readonly<ExploreParams> {
     ...(typeof method === 'string' ? { method } : {}),
     ...(typeof path === 'string' ? { path } : {}),
     ...(typeof query === 'string' ? { query } : {}),
+    ...(risk === 'read' || risk === 'private-read' || risk === 'paid-bulk' || risk === 'write' ? { risk } : {}),
   };
 }
 
@@ -199,7 +198,6 @@ function asXApiClawParams(params: unknown): Readonly<XApiClawParams> {
   const { body, method, path, query: rawQuery } = value;
   if (typeof path !== 'string') return { path: '' };
   const query = asQueryParams(rawQuery);
-
   return {
     ...(body === undefined ? {} : { body }),
     ...(typeof method === 'string' ? { method } : {}),
@@ -208,8 +206,8 @@ function asXApiClawParams(params: unknown): Readonly<XApiClawParams> {
   };
 }
 
-export function requiresXApiClawApproval(params: Readonly<XApiClawParams>): boolean {
-  return requestNeedsApproval(normalizeMethod(params.method ?? 'GET'), params.path);
+function requiresXApiClawApproval(params: Readonly<XApiClawParams>): boolean {
+  return requestNeedsApproval(normalizeMethod(params.method), params.path);
 }
 
 function registerWriteApprovalHook(api: OpenClawApi): void {
@@ -226,7 +224,6 @@ function registerWriteApprovalHook(api: OpenClawApi): void {
       if (event.toolName !== 'xapiclaw') return undefined;
       const params = asXApiClawParams(event.params);
       if (params.path.length === 0 || !requiresXApiClawApproval(params)) return undefined;
-
       return {
         requireApproval: {
           allowedDecisions: ['allow-once', 'deny'],
@@ -247,7 +244,6 @@ function registerWriteApprovalHook(api: OpenClawApi): void {
 function registerTools(api: OpenClawApi, config: Readonly<PluginConfig>, fetchFunction?: FetchFunction): void {
   const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL;
   const apiKey = config.apiKey ?? '';
-
   api.registerTool(
     {
       description: SEARCH_DESCRIPTION,
@@ -284,15 +280,20 @@ function registerCommands(api: OpenClawApi, config: Readonly<PluginConfig>, fetc
   const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL;
   const apiKey = config.apiKey ?? '';
   const request = createTwexApiRequest(baseUrl, apiKey, fetchFunction);
-
   api.registerCommand({
     description: 'Show TwexAPI balance and status',
     handler: async () => ({ text: await handleXStatus(apiKey, request) }),
     name: 'xstatus',
   });
+  api.registerCommand({
+    acceptsArgs: true,
+    description: 'Show trending topics on X from TwexAPI',
+    handler: async ({ args }) => ({ text: await handleXTrends(request, args) }),
+    name: 'xtrends',
+  });
 }
 
-export function register(api: OpenClawApi, fetchFunction?: FetchFunction): void {
+function register(api: OpenClawApi, fetchFunction?: FetchFunction): void {
   const config = asPluginConfig(api.pluginConfig);
   registerWriteApprovalHook(api);
   registerTools(api, config, fetchFunction);
@@ -309,10 +310,11 @@ function registerPlugin(api: OpenClawPluginApi): void {
 
 const plugin = definePluginEntry({
   configSchema: CONFIG_SCHEMA,
-  description: 'Safe X/Twitter workflows through TwexAPI',
+  description: 'Structured X/Twitter workflows through TwexAPI',
   id: 'xapiclaw',
   name: 'XApiClaw',
   register: registerPlugin,
 });
 
+export { asPluginConfig, DEFAULT_BASE_URL, register, requiresXApiClawApproval };
 export default plugin;
