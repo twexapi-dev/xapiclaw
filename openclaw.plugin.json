@@ -1,0 +1,73 @@
+{
+  "id": "xapiclaw",
+  "name": "XApiClaw",
+  "version": "0.1.0",
+  "description": "OpenClaw plugin for safe X/Twitter workflows powered by TwexAPI.",
+  "activation": {
+    "onStartup": false,
+    "onCapabilities": ["tool"]
+  },
+  "commandAliases": [
+    { "name": "xstatus", "kind": "runtime-slash" }
+  ],
+  "skills": ["skills/xapiclaw"],
+  "contracts": {
+    "tools": ["explore", "xapiclaw"]
+  },
+  "toolMetadata": {
+    "xapiclaw": {
+      "optional": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "minLength": 1,
+        "description": "TwexAPI API key. Store as sensitive OpenClaw plugin config."
+      },
+      "baseUrl": {
+        "type": "string",
+        "default": "https://api.twexapi.io",
+        "pattern": "^https://",
+        "description": "HTTPS TwexAPI-compatible API base URL."
+      },
+      "pollingEnabled": {
+        "type": "boolean",
+        "default": false
+      },
+      "pollingInterval": {
+        "type": "number",
+        "default": 60,
+        "minimum": 5,
+        "description": "Reserved polling interval in seconds."
+      }
+    }
+  },
+  "uiHints": {
+    "apiKey": {
+      "label": "TwexAPI API Key",
+      "sensitive": true,
+      "placeholder": "twex_...",
+      "help": "Generate from the TwexAPI dashboard."
+    },
+    "baseUrl": {
+      "label": "API Base URL",
+      "placeholder": "https://api.twexapi.io",
+      "advanced": true,
+      "help": "HTTPS only. Change only for a TwexAPI-compatible deployment."
+    },
+    "pollingEnabled": {
+      "label": "Enable Event Notifications",
+      "advanced": true,
+      "help": "Reserved for a future monitor/event endpoint."
+    },
+    "pollingInterval": {
+      "label": "Event Poll Interval",
+      "advanced": true,
+      "help": "Reserved for future polling support."
+    }
+  }
+}

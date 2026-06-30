@@ -9,7 +9,8 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true
+    "exactOptionalPropertyTypes": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"]
 }
