@@ -1718,10 +1718,10 @@ Create `server.json`:
 ```json
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.Xquik-dev/xapiclaw",
+  "name": "io.github.twexapi-dev/xapiclaw",
   "description": "OpenClaw plugin for safe X/Twitter workflows through TwexAPI. Registers offline endpoint exploration and optional catalog-restricted live execution.",
   "repository": {
-    "url": "https://github.com/Xquik-dev/xapiclaw",
+    "url": "https://github.com/twexapi-dev/xapiclaw",
     "source": "github"
   },
   "version": "0.1.0",
