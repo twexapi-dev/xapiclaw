@@ -1,7 +1,7 @@
 {
   "name": "xapiclaw",
   "version": "0.1.0",
-  "description": "OpenClaw plugin for safe X/Twitter workflows powered by TwexAPI.",
+  "description": "Search tweets, replies, users, followers, trends, lists, communities, DMs, and approved X/Twitter write actions through TwexAPI.",
   "license": "MIT",
   "type": "module",
   "engines": {
