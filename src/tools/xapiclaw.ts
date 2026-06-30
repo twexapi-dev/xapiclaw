@@ -36,10 +36,10 @@ export async function handleXApiClaw(options: HandleOptions): Promise<ToolResult
 
     const request = createTwexApiRequest(options.baseUrl, options.apiKey, options.fetchFunction);
     const response = await request({
-      body: options.params.body,
+      ...(options.params.body === undefined ? {} : { body: options.params.body }),
       method,
       path: options.params.path,
-      query: options.params.query,
+      ...(options.params.query === undefined ? {} : { query: options.params.query }),
     });
     return jsonResult(response);
   } catch (error: unknown) {

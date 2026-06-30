@@ -1,4 +1,9 @@
-import { definePluginEntry } from 'openclaw/plugin-sdk/plugin-entry';
+import {
+  definePluginEntry,
+  type OpenClawPluginApi,
+  type OpenClawPluginConfigSchema,
+} from 'openclaw/plugin-sdk/plugin-entry';
+import type { JsonSchemaObject } from 'openclaw/plugin-sdk/config-schema';
 import { handleXStatus } from './commands/xstatus.js';
 import { createTwexApiRequest } from './request.js';
 import { normalizeMethod, requestNeedsApproval } from './tools/catalog.js';
@@ -9,7 +14,7 @@ import type { ExploreParams, FetchFunction, PluginConfig, ToolResult, XApiClawPa
 export const DEFAULT_BASE_URL = 'https://api.twexapi.io';
 const MIN_POLLING_INTERVAL_SECONDS = 5;
 
-const CONFIG_SCHEMA = {
+const CONFIG_JSON_SCHEMA = {
   additionalProperties: false,
   properties: {
     apiKey: {
@@ -32,6 +37,10 @@ const CONFIG_SCHEMA = {
     },
   },
   type: 'object',
+} as const;
+
+const CONFIG_SCHEMA: OpenClawPluginConfigSchema = {
+  jsonSchema: CONFIG_JSON_SCHEMA as unknown as JsonSchemaObject,
 };
 
 interface CommandContext {
@@ -83,6 +92,7 @@ interface OpenClawApi {
     tool: {
       readonly description: string;
       readonly execute: (toolCallId: string, params: unknown) => Promise<ToolResult>;
+      readonly label: string;
       readonly name: string;
       readonly parameters: unknown;
     },
@@ -245,6 +255,7 @@ function registerTools(api: OpenClawApi, config: Readonly<PluginConfig>, fetchFu
         await Promise.resolve();
         return handleExplore(asExploreParams(params));
       },
+      label: 'Explore',
       name: 'explore',
       parameters: EXPLORE_PARAMETERS,
     },
@@ -261,6 +272,7 @@ function registerTools(api: OpenClawApi, config: Readonly<PluginConfig>, fetchFu
           ...(fetchFunction === undefined ? {} : { fetchFunction }),
           params: asXApiClawParams(params),
         }),
+      label: 'XApiClaw',
       name: 'xapiclaw',
       parameters: XAPICLAW_PARAMETERS,
     },
@@ -291,12 +303,16 @@ export function register(api: OpenClawApi, fetchFunction?: FetchFunction): void 
   api.logger.info('XApiClaw: Plugin registered successfully');
 }
 
+function registerPlugin(api: OpenClawPluginApi): void {
+  register(api as unknown as OpenClawApi);
+}
+
 const plugin = definePluginEntry({
   configSchema: CONFIG_SCHEMA,
   description: 'Safe X/Twitter workflows through TwexAPI',
   id: 'xapiclaw',
   name: 'XApiClaw',
-  register,
+  register: registerPlugin,
 });
 
 export default plugin;
