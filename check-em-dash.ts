@@ -12,8 +12,8 @@
  * Exits with code 1 if any violations are found.
  */
 
-import { reportViolations, walkSourceFiles } from './check-common';
-import type { BaseViolation } from './check-common';
+import { reportViolations, walkSourceFiles } from './check-common.js';
+import type { BaseViolation } from './check-common.js';
 
 const IGNORED_FILES = new Set([
   'check-em-dash.ts',

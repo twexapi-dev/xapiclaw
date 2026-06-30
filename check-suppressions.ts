@@ -8,7 +8,7 @@
  * Exits with code 1 if any suppressions are found.
  */
 
-import { reportViolations, walkSourceFiles } from './check-common';
+import { reportViolations, walkSourceFiles } from './check-common.js';
 
 const SUPPRESSION_PATTERNS = [
   /eslint-disable-next-line/,

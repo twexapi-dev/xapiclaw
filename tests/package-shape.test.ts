@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import packageJson from '../package.json' with { type: 'json' };
 
+const packageShape = packageJson as typeof packageJson & { readonly peerDependenciesMeta?: unknown };
+
 describe('package shape', () => {
   test('uses xapiclaw identity and runtime entry', () => {
     expect(packageJson.name).toBe('xapiclaw');
@@ -17,8 +19,8 @@ describe('package shape', () => {
     expect(tsconfig.include).toEqual(['src/**/*.ts']);
   });
 
-  test('does not declare accountless payment peer dependencies', () => {
+  test('does not declare extra peer dependency metadata', () => {
     expect(packageJson.peerDependencies).toEqual({ openclaw: '>=2026.6.8' });
-    expect(packageJson.peerDependenciesMeta).toBeUndefined();
+    expect(packageShape.peerDependenciesMeta).toBeUndefined();
   });
 });
