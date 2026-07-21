@@ -6,6 +6,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/twexapi-dev/xapiclaw.svg)
 [![TwexAPI Docs](https://img.shields.io/badge/TwexAPI-docs-0f766e)](https://docs.twexapi.io)
 [![Context7 Agent Docs](https://img.shields.io/badge/Context7-agent%20docs-0f766e)](https://context7.com/twexapi-dev/xapiclaw)
+[![Apify Actor](https://apify.com/actor-badge?actor=fastcrawler/tweet-x-twitter-scraper-0-05-1k-pay-per-result-v2)](https://apify.com/fastcrawler/tweet-x-twitter-scraper-0-05-1k-pay-per-result-v2)
 
 Search tweets, search tweet replies, inspect timelines, export followers,
 look up users, read trends, work with lists and communities, use XChat v3
