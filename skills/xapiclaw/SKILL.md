@@ -15,7 +15,7 @@ XApiClaw is an OpenClaw plugin for safe X/Twitter workflows powered by TwexAPI.
 Install:
 
 ```bash
-openclaw plugins install npm:xapiclaw
+openclaw plugins install npm:@twexapi-dev/xapiclaw
 ```
 
 Configure a TwexAPI API key in OpenClaw plugin config. The agent must never print, echo, or request raw API keys in chat.

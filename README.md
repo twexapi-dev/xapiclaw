@@ -1,7 +1,7 @@
 # XApiClaw
 
-[![npm](https://img.shields.io/npm/v/xapiclaw.svg)](https://registry.npmjs.org/xapiclaw)
-[![npm downloads](https://img.shields.io/npm/dm/xapiclaw.svg)](https://registry.npmjs.org/xapiclaw)
+[![npm](https://img.shields.io/npm/v/@twexapi-dev/xapiclaw.svg)](https://registry.npmjs.org/@twexapi-dev%2Fxapiclaw)
+[![npm downloads](https://img.shields.io/npm/dm/@twexapi-dev/xapiclaw.svg)](https://registry.npmjs.org/@twexapi-dev%2Fxapiclaw)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![GitHub stars](https://img.shields.io/github/stars/twexapi-dev/xapiclaw.svg)
 [![TwexAPI Docs](https://img.shields.io/badge/TwexAPI-docs-0f766e)](https://docs.twexapi.io)
@@ -20,11 +20,11 @@ inject authentication server-side so the agent never sees the secret.
 ## Install
 
 ```bash
-openclaw plugins install npm:xapiclaw
+openclaw plugins install npm:@twexapi-dev/xapiclaw
 ```
 
-This installs the npm package `xapiclaw` with OpenClaw's explicit npm source
-selector. The `npm:` prefix keeps the install source deterministic.
+This installs the npm package `@twexapi-dev/xapiclaw` with OpenClaw's explicit
+npm source selector. The `npm:` prefix keeps the install source deterministic.
 
 For normal upgrades, reuse the tracked install source:
 
@@ -35,7 +35,7 @@ openclaw plugins update xapiclaw
 For reproducible production installs, pin a published npm version:
 
 ```bash
-openclaw plugins install npm:xapiclaw@<version> --pin
+openclaw plugins install npm:@twexapi-dev/xapiclaw@<version> --pin
 ```
 
 OpenClaw keeps pinned records on the selected version during later
@@ -110,7 +110,7 @@ repo folder so OpenClaw loads the published `dist/index.js` entry:
 
 ```bash
 npm pack
-openclaw plugins install npm-pack:./xapiclaw-<version>.tgz
+openclaw plugins install npm-pack:./twexapi-dev-xapiclaw-<version>.tgz
 openclaw plugins inspect xapiclaw --runtime --json
 ```
 
@@ -244,7 +244,7 @@ and tweet sentiment analysis.
 - [TwexAPI OpenAPI Spec](https://docs.twexapi.io/openapi.json)
 - [OpenClaw](https://github.com/openclaw/openclaw)
 - [XApiClaw Repository](https://github.com/twexapi-dev/xapiclaw)
-- [npm Registry Metadata](https://registry.npmjs.org/xapiclaw)
+- [npm Registry Metadata](https://registry.npmjs.org/@twexapi-dev%2Fxapiclaw)
 
 ## License
 

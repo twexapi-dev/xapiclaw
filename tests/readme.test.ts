@@ -15,7 +15,7 @@ describe('README', () => {
     expect(readme).toContain('# XApiClaw');
     expect(readme).toContain('TwexAPI');
     expect(readme).toContain('Authorization: Bearer');
-    expect(readme).toContain('openclaw plugins install npm:xapiclaw');
+    expect(readme).toContain('openclaw plugins install npm:@twexapi-dev/xapiclaw');
     expect(readme).toContain('openclaw plugins update xapiclaw');
     expect(readme).toContain('## OpenClaw Trust Model');
     expect(readme).toContain('## Tools');

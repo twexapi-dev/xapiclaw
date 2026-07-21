@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PACKAGE_NAME = "xapiclaw";
+const PACKAGE_NAME = "@twexapi-dev/xapiclaw";
 const PLUGIN_ID = "xapiclaw";
 const PLUGIN_NAME = "XApiClaw";
 const REPOSITORY_URL = "https://github.com/twexapi-dev/xapiclaw";
@@ -129,7 +129,7 @@ const docChecks = [
   {
     path: "README.md",
     fragments: [
-      "openclaw plugins install npm:xapiclaw",
+      "openclaw plugins install npm:@twexapi-dev/xapiclaw",
       "openclaw plugins update xapiclaw",
       "Authorization: Bearer",
       "tools.alsoAllow",
@@ -141,7 +141,7 @@ const docChecks = [
   {
     path: "docs/openclaw-setup.md",
     fragments: [
-      "openclaw plugins install npm:xapiclaw",
+      "openclaw plugins install npm:@twexapi-dev/xapiclaw",
       "openclaw plugins update xapiclaw",
       "Authorization: Bearer",
       "tools.alsoAllow",
@@ -156,7 +156,7 @@ const docChecks = [
   },
   {
     path: SKILL_PATH,
-    fragments: ["openclaw plugins install npm:xapiclaw", "`explore`", "`xapiclaw`", "/xstatus", "/xtrends"],
+    fragments: ["openclaw plugins install npm:@twexapi-dev/xapiclaw", "`explore`", "`xapiclaw`", "/xstatus", "/xtrends"],
   },
 ];
 

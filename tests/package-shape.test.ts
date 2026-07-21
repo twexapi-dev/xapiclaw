@@ -6,12 +6,12 @@ const packageShape = packageJson as typeof packageJson & { readonly peerDependen
 
 describe('package shape', () => {
   test('uses xapiclaw identity and runtime entry', () => {
-    expect(packageJson.name).toBe('xapiclaw');
+    expect(packageJson.name).toBe('@twexapi-dev/xapiclaw');
     expect(packageJson.repository.url).toBe('git+https://github.com/twexapi-dev/xapiclaw.git');
     expect(packageJson.homepage).toBe('https://github.com/twexapi-dev/xapiclaw#readme');
     expect(packageJson.bugs.url).toBe('https://github.com/twexapi-dev/xapiclaw/issues');
     expect(packageJson.openclaw.runtimeExtensions).toEqual(['./dist/index.js']);
-    expect(packageJson.openclaw.install.npmSpec).toBe('xapiclaw@0.1.0');
+    expect(packageJson.openclaw.install.npmSpec).toBe('@twexapi-dev/xapiclaw@0.1.0');
   });
 
   test('build excludes tests from tsconfig include', () => {

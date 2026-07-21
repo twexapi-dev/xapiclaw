@@ -2,6 +2,7 @@
 
 Use this guide when installing, configuring, or verifying XApiClaw in OpenClaw.
 It keeps the setup path short, public-safe, and aligned with the package at
+`@twexapi-dev/xapiclaw`. The GitHub repository remains
 `twexapi-dev/xapiclaw`.
 
 ## What XApiClaw Adds
@@ -22,7 +23,7 @@ The plugin can install before credentials exist. Without credentials,
 Install the published package:
 
 ```bash
-openclaw plugins install npm:xapiclaw
+openclaw plugins install npm:@twexapi-dev/xapiclaw
 ```
 
 For routine upgrades, keep the tracked install source and update the plugin id:
@@ -34,7 +35,7 @@ openclaw plugins update xapiclaw
 For reproducible production installs, pin a published npm version:
 
 ```bash
-openclaw plugins install npm:xapiclaw@<version> --pin
+openclaw plugins install npm:@twexapi-dev/xapiclaw@<version> --pin
 ```
 
 Current source metadata targets OpenClaw `2026.6.8` or newer. Update OpenClaw
@@ -92,7 +93,7 @@ source checkout:
 
 ```bash
 npm pack
-openclaw plugins install npm-pack:./xapiclaw-<version>.tgz
+openclaw plugins install npm-pack:./twexapi-dev-xapiclaw-<version>.tgz
 openclaw plugins inspect xapiclaw --runtime --json
 ```
 

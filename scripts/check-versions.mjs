@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PACKAGE_NAME = "xapiclaw";
+const PACKAGE_NAME = "@twexapi-dev/xapiclaw";
 const PLUGIN_ID = "xapiclaw";
 const REPOSITORY_URL = "https://github.com/twexapi-dev/xapiclaw";
 const OPENCLAW_BASELINE = "2026.6.8";
@@ -65,12 +65,12 @@ expectEqual("package.json openclaw.install.npmSpec", packageJson.openclaw?.insta
 expectEqual("package.json openclaw.install.minHostVersion", packageJson.openclaw?.install?.minHostVersion, OPENCLAW_RANGE);
 expectEqual("package.json openclaw.runtimeExtensions[0]", packageJson.openclaw?.runtimeExtensions?.[0], "./dist/index.js");
 
-expectText("README.md", "openclaw plugins install npm:xapiclaw");
+expectText("README.md", "openclaw plugins install npm:@twexapi-dev/xapiclaw");
 expectText("README.md", "openclaw plugins update xapiclaw");
 expectText("README.md", "Authorization: Bearer");
 expectText("README.md", "twexapi-dev/xapiclaw");
 expectText("server.json", "io.github.twexapi-dev/xapiclaw");
-expectText("skills/xapiclaw/SKILL.md", "openclaw plugins install npm:xapiclaw");
+expectText("skills/xapiclaw/SKILL.md", "openclaw plugins install npm:@twexapi-dev/xapiclaw");
 
 if (drifts.length > 0) {
   process.stderr.write(`Version drift detected (package.json = ${expectedVersion}):\n${drifts.join("\n")}\n`);
