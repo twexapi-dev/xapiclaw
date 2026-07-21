@@ -11,7 +11,7 @@ describe('package shape', () => {
     expect(packageJson.homepage).toBe('https://github.com/twexapi-dev/xapiclaw#readme');
     expect(packageJson.bugs.url).toBe('https://github.com/twexapi-dev/xapiclaw/issues');
     expect(packageJson.openclaw.runtimeExtensions).toEqual(['./dist/index.js']);
-    expect(packageJson.openclaw.install.npmSpec).toBe('@twexapi-dev/xapiclaw@0.1.0');
+    expect(packageJson.openclaw.install.npmSpec).toBe('@twexapi-dev/xapiclaw@0.2.0');
   });
 
   test('build excludes tests from tsconfig include', () => {

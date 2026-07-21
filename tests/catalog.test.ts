@@ -10,7 +10,7 @@ import {
 
 describe('TwexAPI catalog', () => {
   test('exposes only agent-callable endpoints', () => {
-    expect(specEndpoints).toHaveLength(76);
+    expect(specEndpoints).toHaveLength(84);
     expect(specEndpoints.some((endpoint) => endpoint.path === '/twitter/{auth_token}/cookie')).toBe(false);
   });
 
@@ -22,6 +22,16 @@ describe('TwexAPI catalog', () => {
   test('finds endpoints by concrete path', () => {
     const endpoint = findEndpoint('GET', '/twitter/elonmusk/about');
     expect(endpoint?.path).toBe('/twitter/{screen_name}/about');
+  });
+
+  test('rejects superseded lower-version endpoints while keeping latest versions', () => {
+    expect(findEndpoint('POST', '/twitter/dm-history')).toBeUndefined();
+    expect(findEndpoint('POST', '/twitter/send-dm')).toBeUndefined();
+    expect(findEndpoint('POST', '/twitter/followers/page')).toBeUndefined();
+    expect(findEndpoint('POST', '/twitter/tweets/lookup')).toBeUndefined();
+    expect(findEndpoint('POST', '/v3/twitter/dm-history')?.path).toBe('/v3/twitter/dm-history');
+    expect(findEndpoint('POST', '/v3/twitter/send-dm')?.path).toBe('/v3/twitter/send-dm');
+    expect(findEndpoint('POST', '/v2/tweet/detail')?.path).toBe('/v2/tweet/detail');
   });
 
   test('resolves catalog request and normalizes query values', () => {

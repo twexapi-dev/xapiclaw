@@ -1,8 +1,8 @@
 {
   "id": "xapiclaw",
   "name": "XApiClaw",
-  "version": "0.1.0",
-  "description": "Search tweets, replies, users, followers, trends, lists, communities, DMs, and approved X/Twitter write actions through TwexAPI.",
+  "version": "0.2.0",
+  "description": "Search tweets, replies, users, followers, trends, lists, communities, XChat DMs, Grok, and approved X/Twitter write actions through TwexAPI.",
   "activation": {
     "onStartup": false,
     "onCapabilities": ["tool"]

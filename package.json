@@ -1,7 +1,7 @@
 {
   "name": "@twexapi-dev/xapiclaw",
-  "version": "0.1.0",
-  "description": "Search tweets, replies, users, followers, trends, lists, communities, DMs, and approved X/Twitter write actions through TwexAPI.",
+  "version": "0.2.0",
+  "description": "Search tweets, replies, users, followers, trends, lists, communities, XChat DMs, Grok, and approved X/Twitter write actions through TwexAPI.",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -32,7 +32,7 @@
     },
     "install": {
       "defaultChoice": "npm",
-      "npmSpec": "@twexapi-dev/xapiclaw@0.1.0",
+      "npmSpec": "@twexapi-dev/xapiclaw@0.2.0",
       "minHostVersion": ">=2026.6.8"
     }
   },
@@ -60,6 +60,8 @@
     "x-twitter",
     "tweet-api",
     "twitter-automation",
+    "grok",
+    "xchat",
     "openclaw"
   ],
   "scripts": {

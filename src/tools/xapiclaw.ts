@@ -11,10 +11,12 @@ Use "explore" first to find the endpoint, then call this tool with structured pa
 - query: query parameters as an object
 - body: JSON request body
 
-Auth is injected automatically. Never pass API keys, passwords, cookies, auth tokens, or TOTP secrets.
+TwexAPI API key auth is injected automatically. Never pass TwexAPI API keys, passwords, or TOTP secrets.
+Only include Twitter cookie or auth_token fields for endpoints that document them, after explicit user authorization and approval.
 
 Important rules:
 - Only endpoints listed in the bundled catalog can be invoked. Unknown paths are rejected.
+- When a lower-version path is superseded by a matching v2 or v3 path, use the highest-version catalog entry.
 - The plugin only calls the configured TwexAPI API base URL.
 - Blocked cookie conversion, engagement purchase, profile mutation, random-cookie posting, and sentiment endpoints are not agent-callable.
 - Write, private-read, and paid/bulk calls trigger an OpenClaw approval prompt.
