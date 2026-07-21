@@ -1,5 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
+  "url": "https://context7.com/twexapi-dev/xapiclaw",
+  "public_key": "pk_eMuD2EpbIvLYAeHSz9G8n",
   "projectTitle": "XApiClaw",
   "description": "OpenClaw plugin for safe X/Twitter workflows powered by TwexAPI.",
   "branch": "main",
