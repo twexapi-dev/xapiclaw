@@ -17,6 +17,7 @@ describe('README', () => {
     expect(readme).toContain('Authorization: Bearer');
     expect(readme).toContain('openclaw plugins install npm:@twexapi-dev/xapiclaw');
     expect(readme).toContain('openclaw plugins update xapiclaw');
+    expect(readme).toContain('https://nothumansearch.ai/site/twexapi.io');
     expect(readme).toContain('https://context7.com/twexapi-dev/xapiclaw');
     expect(readme).toContain('https://apify.com/fastcrawler/tweet-x-twitter-scraper-0-05-1k-pay-per-result-v2');
     expect(readme).toContain('## OpenClaw Trust Model');
