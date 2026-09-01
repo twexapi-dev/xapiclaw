@@ -9,12 +9,14 @@
 [![Context7 Agent Docs](https://img.shields.io/badge/Context7-agent%20docs-0f766e)](https://context7.com/twexapi-dev/xapiclaw)
 [![Apify Actor](https://apify.com/actor-badge?actor=fastcrawler/tweet-x-twitter-scraper-0-05-1k-pay-per-result-v2)](https://apify.com/fastcrawler/tweet-x-twitter-scraper-0-05-1k-pay-per-result-v2)
 
-Search tweets, search tweet replies, inspect timelines, export followers,
-look up users, read trends, work with lists and communities, use XChat v3
-DM endpoints, ask Grok, and run approved X/Twitter write actions from
+> TwexAPI is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+Search public posts and replies, inspect timelines, export followers,
+look up profiles, read trends, work with lists and communities, use XChat v3
+DM endpoints, ask Grok, and run approved account actions from
 [OpenClaw](https://github.com/openclaw/openclaw).
 
-Use XApiClaw as an OpenClaw X/Twitter automation plugin backed by
+Use XApiClaw as an OpenClaw workflow plugin backed by
 [TwexAPI](https://docs.twexapi.io). It follows a compact agent-facing shape:
 one free local catalog tool, one optional live action tool, and slash commands
 for account status and trends. Live requests use your TwexAPI API key and
