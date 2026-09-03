@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.twexapi-dev/xapiclaw",
-  "description": "Search tweets, replies, users, followers, trends, lists, communities, XChat DMs, Grok, and approved X/Twitter write actions through TwexAPI. OpenClaw plugin with curated TwexAPI endpoints via 2 tools (explore + xapiclaw). API key auth with Authorization: Bearer.",
+  "description": "Search tweets, replies, users, followers, trends, lists, and communities with TwexAPI from OpenClaw. Not affiliated with X Corp.",
   "repository": {
     "url": "https://github.com/twexapi-dev/xapiclaw",
     "source": "github"

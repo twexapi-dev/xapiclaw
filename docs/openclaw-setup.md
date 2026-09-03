@@ -8,7 +8,7 @@ It keeps the setup path short, public-safe, and aligned with the package at
 ## What XApiClaw Adds
 
 XApiClaw is the `xapiclaw` OpenClaw plugin for TwexAPI-backed X/Twitter
-workflows. It registers 2 structured tools and 2 slash commands:
+research. It registers 2 structured tools and 2 slash commands:
 
 - `explore`: local TwexAPI catalog search with no network request.
 - `xapiclaw`: live endpoint invoker for catalog-listed TwexAPI paths.
@@ -56,8 +56,9 @@ Live calls inject the key as:
 Authorization: Bearer YOUR_API_KEY
 ```
 
-Never paste API keys, passwords, cookies, auth tokens, or other credentials
-into chat, docs, logs, screenshots, or tool arguments.
+Never paste API keys, passwords, credentials, or other credentials
+into chat, docs, logs, screenshots, or tool arguments. Never commit those
+secrets.
 
 Optional settings:
 
@@ -126,9 +127,9 @@ problems. XApiClaw uses both:
 - The plugin approval hook runs after the model selects `xapiclaw` and before
   OpenClaw executes the call.
 
-XApiClaw requests approval for write, private-read, and paid-bulk calls.
-Approval prompts offer one-time approval or deny; they do not create durable
-trust for future X account actions.
+XApiClaw requests approval for higher-risk catalog calls. Prefer public reads
+for research. Approval prompts offer one-time approval or deny; they do not
+create durable trust for future sensitive calls.
 
 ## First Checks
 

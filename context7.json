@@ -20,7 +20,7 @@
   "rules": [
     "Use the explore tool before xapiclaw to find supported TwexAPI endpoints.",
     "Use the highest available TwexAPI endpoint version when duplicate capabilities exist.",
-    "Never expose TwexAPI API keys, cookies, auth tokens, or bearer tokens.",
+    "Never expose TwexAPI API keys or bearer tokens.",
     "Require explicit approval before write, private-read, paid-bulk, DM, Grok, or account-affecting calls."
   ]
 }

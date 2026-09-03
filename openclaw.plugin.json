@@ -2,18 +2,31 @@
   "id": "xapiclaw",
   "name": "XApiClaw",
   "version": "0.2.0",
-  "description": "Search tweets, replies, users, followers, trends, lists, communities, XChat DMs, Grok, and approved X/Twitter write actions through TwexAPI.",
+  "description": "Search tweets, replies, users, followers, trends, lists, and communities with TwexAPI from OpenClaw. Not affiliated with X Corp.",
   "activation": {
     "onStartup": false,
-    "onCapabilities": ["tool"]
+    "onCapabilities": [
+      "tool"
+    ]
   },
   "commandAliases": [
-    { "name": "xstatus", "kind": "runtime-slash" },
-    { "name": "xtrends", "kind": "runtime-slash" }
+    {
+      "name": "xstatus",
+      "kind": "runtime-slash"
+    },
+    {
+      "name": "xtrends",
+      "kind": "runtime-slash"
+    }
   ],
-  "skills": ["skills/xapiclaw"],
+  "skills": [
+    "skills/xapiclaw"
+  ],
   "contracts": {
-    "tools": ["explore", "xapiclaw"]
+    "tools": [
+      "explore",
+      "xapiclaw"
+    ]
   },
   "toolMetadata": {
     "xapiclaw": {
