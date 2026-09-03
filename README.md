@@ -210,9 +210,9 @@ for future TwexAPI monitor/event endpoints.
 ## API Coverage
 
 84 curated agent-callable endpoints across 19 TwexAPI categories. Dashboard-only
-account-admin, billing, raw credential conversion, engagement purchase,
-profile modification, list creation, and sentiment
-analysis flows are excluded from the tool catalog and blocked at runtime.
+account-admin, billing, raw credential conversion, profile modification, list
+creation, and sentiment analysis flows are excluded from the tool catalog and
+blocked at runtime.
 When TwexAPI documents the same capability in multiple versions, XApiClaw keeps
 the highest available version in the agent-callable catalog and hides the
 superseded lower-version path.

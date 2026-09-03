@@ -18,7 +18,7 @@ Important rules:
 - Only endpoints listed in the bundled catalog can be invoked. Unknown paths are rejected.
 - When a lower-version path is superseded by a matching v2 or v3 path, use the highest-version catalog entry.
 - The plugin only calls the configured TwexAPI API base URL.
-- Blocked cookie conversion, engagement purchase, profile mutation, random-cookie posting, and sentiment endpoints are not agent-callable.
+- Blocked credential-helper, profile mutation, and sentiment endpoints are not agent-callable.
 - Write, private-read, and paid/bulk calls trigger an OpenClaw approval prompt.
 
 Example: Search tweets

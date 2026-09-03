@@ -111,7 +111,6 @@ XApiClaw should keep upstream source's agent safety shape:
 Initial blocked families:
 
 - Cookie conversion and auth-token user-info conversion.
-- Social engagement purchase/order endpoints.
 - Profile mutation endpoints.
 - Random-cookie posting endpoints.
 - Sentiment endpoints unless explicitly approved later.

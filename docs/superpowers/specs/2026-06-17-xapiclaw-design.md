@@ -30,7 +30,6 @@ Build `xapiclaw` as an OpenClaw plugin modeled after upstream source's agent-fac
 - Do not build a general TwexAPI SDK.
 - Do not expose arbitrary URL fetching, arbitrary OpenAPI execution, shell access, filesystem access, or third-party network access.
 - Do not allow agents to handle raw X cookies, Twitter credentials, or TwexAPI API keys directly.
-- Do not include TwexAPI social media engagement purchase endpoints in the agent catalog.
 
 ## Plugin Identity
 
@@ -116,7 +115,6 @@ Included write or sensitive action categories:
 Excluded categories:
 
 - Cookie endpoints, including auth-token-to-cookie and auth-token-to-user-info.
-- Social media services endpoints for purchasing engagement and checking engagement orders.
 - Profile modification endpoint for bio/avatar/banner in the first release.
 - Any endpoint that requires raw Twitter credentials, X cookies, or token conversion.
 - Any billing, subscription, API-key administration, or account-connection endpoint if TwexAPI adds one later.
