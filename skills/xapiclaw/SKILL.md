@@ -14,6 +14,8 @@ XApiClaw is an OpenClaw plugin for safe X/Twitter research powered by TwexAPI,
 including search, timelines, followers, trends, lists, communities, and
 articles.
 
+Links: [TwexAPI](https://twexapi.io) · [API docs](https://docs.twexapi.io) · [Pricing](https://twexapi.io/pricing) · [Get an API key](https://twexapi.io/dashboard)
+
 Install:
 
 ```bash
